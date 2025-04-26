@@ -6,7 +6,7 @@
 create Virtual env
 
   ```
-  python -m venv chatbot-env
+  python -m venv nlp-env
   ```
 activate Virtual env
 
