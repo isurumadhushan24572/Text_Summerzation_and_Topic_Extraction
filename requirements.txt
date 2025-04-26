@@ -1,0 +1,8 @@
+streamlit 
+transformers 
+torch 
+sentence-transformers 
+pyPDF2 
+bertopic 
+umap-learn
+hf_xet
