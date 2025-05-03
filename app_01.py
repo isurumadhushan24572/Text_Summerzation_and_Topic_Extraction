@@ -3,7 +3,6 @@ from pdf_processor import extract_text_from_pdf
 from summarizer_01 import initialize_summarizer, generate_summary
 from topic_modeler_01 import initialize_topic_model, extract_topics
 import time
-from collections import defaultdict
 
 st.set_page_config(
     page_title="Summarizer & Topic Extractor 🚀",
@@ -17,15 +16,11 @@ def load_models():
     topic_model = initialize_topic_model()
     return summarizer, topic_model
 
-def split_into_sentences(text):
-    return [sent.strip() for sent in text.split('. ') if sent.strip()]
-
 def main():
     with st.sidebar:
         st.title("⚙️ Settings")
         st.markdown("---")
         input_method = st.radio("Choose input method:", ("📄 Upload PDF", "✍️ Paste Text"))
-        # max_summary_length = st.slider("Summary Length (words)", 50, 500, 150, 10)
         st.markdown("---")
         st.info("Need help? Scroll to the bottom ➡️ 📚 About Section")
 
@@ -41,14 +36,14 @@ def main():
             with st.spinner("Extracting text from PDF..."):
                 text = extract_text_from_pdf(uploaded_file)
     else:
-        text = st.text_area("Paste your text below 👇", height=300, 
-                          placeholder="Paste large articles, research papers, notes...")
+        text = st.text_area("Paste your text below 👇", height=300,
+                            placeholder="Paste large articles, research papers, notes...")
 
     if text and st.button("✨ Process Text"):
         with st.spinner("AI is working on it... 🛠️"):
             start_time = time.time()
 
-            summary = generate_summary(text, summarizer, max_length=250)
+            summary = generate_summary(text, summarizer)  # max_length handled inside summarizer_01 now
             topic_info = extract_topics(text, topic_model)
 
             processing_time = time.time() - start_time
@@ -95,6 +90,6 @@ def main():
         - Use texts longer than 500 words for better topic extraction
         - Click 'Process Text' after uploading or pasting content
         """)
-        
+
 if __name__ == "__main__":
     main()
