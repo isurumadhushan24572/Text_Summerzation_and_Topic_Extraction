@@ -48,7 +48,7 @@ def main():
         with st.spinner("AI is working on it... 🛠️"):
             start_time = time.time()
 
-            summary = generate_summary(text, summarizer, max_length=max_summary_length)
+            summary = generate_summary(text, summarizer, max_length=500)
             topic_info = extract_topics(text, topic_model)
 
             processing_time = time.time() - start_time
