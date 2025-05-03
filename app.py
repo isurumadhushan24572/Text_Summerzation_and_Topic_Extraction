@@ -25,7 +25,7 @@ def main():
         st.title("⚙️ Settings")
         st.markdown("---")
         input_method = st.radio("Choose input method:", ("📄 Upload PDF", "✍️ Paste Text"))
-        max_summary_length = st.slider("Summary Length (words)", 50, 500, 150, 10)
+        # max_summary_length = st.slider("Summary Length (words)", 50, 500, 150, 10)
         st.markdown("---")
         st.info("Need help? Scroll to the bottom ➡️ 📚 About Section")
 
