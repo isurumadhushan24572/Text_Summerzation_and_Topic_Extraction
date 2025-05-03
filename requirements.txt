@@ -6,3 +6,4 @@ pyPDF2
 bertopic 
 umap-learn
 hf_xet
+pdfplumber

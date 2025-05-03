@@ -3,18 +3,13 @@ from pdf_processor import extract_text_from_pdf
 from summarizer import initialize_summarizer, generate_summary
 from topic_modeler import initialize_topic_model, extract_topics
 import time
+from collections import defaultdict
 
-
-# --------- Setup Page Config ---------
 st.set_page_config(
     page_title="Summarizer & Topic Extractor 🚀",
     layout="wide",
     initial_sidebar_state="expanded",
 )
-
-# --------- Cache Models ---------
-
-# Initialize models once
 
 @st.cache_resource
 def load_models():
@@ -22,133 +17,84 @@ def load_models():
     topic_model = initialize_topic_model()
     return summarizer, topic_model
 
+def split_into_sentences(text):
+    return [sent.strip() for sent in text.split('. ') if sent.strip()]
 
-# --------- Main App ---------
 def main():
-    # ---------- Sidebar ----------
     with st.sidebar:
         st.title("⚙️ Settings")
         st.markdown("---")
-
-        # Input Method (Choose between PDF or Text)
         input_method = st.radio("Choose input method:", ("📄 Upload PDF", "✍️ Paste Text"))
-
-        # Summary Length Slider
-        max_summary_length = st.slider("Summary Length (words)", 50, 500, 150, 10)
-        st.markdown("---")
-
-        # Show Topics Checkbox
-        show_topics = st.checkbox("Show Topics after Summary", value=True)
+        max_summary_length = st.slider("Summary Length (words)", 50, 1000, 150, 10)
         st.markdown("---")
         st.info("Need help? Scroll to the bottom ➡️ 📚 About Section")
 
-    # ---------- Header ----------
     st.title("Smart Text Summarization & Topic Extraction")
     st.caption("An AI tool to quickly **summarize** and **understand** your documents.")
 
     summarizer, topic_model = load_models()
-
-    # ---------- Input Section ----------
     text = ""
 
-    # File upload option (PDF)
     if input_method == "📄 Upload PDF":
-        uploaded_file = st.file_uploader("Upload your PDF here", type="pdf", accept_multiple_files=False)
+        uploaded_file = st.file_uploader("Upload your PDF here", type="pdf")
         if uploaded_file:
             with st.spinner("Extracting text from PDF..."):
                 text = extract_text_from_pdf(uploaded_file)
-
-    # Text input option (Paste Text)
     else:
-        text = st.text_area("Paste your text below 👇", height=300, placeholder="Paste large articles, research papers, notes...")
+        text = st.text_area("Paste your text below 👇", height=300, 
+                          placeholder="Paste large articles, research papers, notes...")
 
-    # ---------- Process Button ----------
-    if text:
-        if st.button("✨ Process Text"):
-            with st.spinner("AI is working on it... 🛠️"):
-                start_time = time.time()
+    if text and st.button("✨ Process Text"):
+        with st.spinner("AI is working on it... 🛠️"):
+            start_time = time.time()
 
-                # Generate Summary
-                summary = generate_summary(text, summarizer, max_length=max_summary_length)
-                processing_time = time.time() - start_time
+            summary = generate_summary(text, summarizer, max_length=max_summary_length)
+            topic_info = extract_topics(text, topic_model)
 
-            # Success Message after processing
-            st.success(f"✅ Done! Processed in {processing_time:.2f} seconds.")
+            processing_time = time.time() - start_time
 
-            # ---------- Results Display ----------
-            st.markdown("---")
-            st.header("📃 Summary Result")
+        st.success(f"✅ Done! Processed in {processing_time:.2f} seconds.")
+        st.markdown("---")
 
-            # Expandable summary section
-            with st.expander("🔎 View Summary"):
-                st.info(summary)
+        st.header("📃 Summary Result")
+        with st.expander("🔎 View Summary", expanded=True):
+            st.info(summary)
+        st.download_button("📥 Download Summary", summary, file_name="summary.txt")
 
-            # Download Button for the Summary
-            st.download_button("📥 Download Summary", summary, file_name="summary.txt", mime="text/plain")
+        st.markdown("---")
+        st.header("🗂 Topic Extraction")
 
-            # Show Topics if selected
-            if show_topics:
+        st.subheader("Main Themes")
+        st.write(topic_info['summary'])
+
+        if topic_info['topics']:
+            st.subheader("Topic Labels")
+            for i, (label, desc) in enumerate(zip(topic_info['topics'], topic_info['descriptions']), 1):
+                st.markdown(f"""
+                **Topic {i}:** {label}  
+                *Representative segment:*  
+                `{desc}`
+                """)
                 st.markdown("---")
-                st.header("🗂 Extracted Topics")
+        else:
+            st.warning("No meaningful topics could be extracted from the text.")
 
-                # Extract and display topics
-                topic_info = extract_topics(text, topic_model)
-
-                for index, row in topic_info.iterrows():
-                    if row['Topic'] != -1:  # Ignore outliers
-                        with st.container():
-                            st.subheader(f"Topic {row['Topic']}")
-                            st.write(", ".join(row['Representative_Docs']))
-                            st.markdown("---")
-
-    else:
+    elif not text:
         st.warning("🚨 Please upload a PDF or paste some text to begin.")
 
-    # ---------- Footer ----------
     st.markdown("---")
     with st.expander("📚 About This App"):
         st.markdown("""
-        - **Text Summarization** using Transformers
-        - **Topic Extraction** using BERTopic
-        - Built with Python & Streamlit
-        - Perfect for summarizing research papers, business documents, long articles, and more!
+        ## Features
+        - **AI-Powered Summarization**: Transformers-based text condensation
+        - **Smart Topic Extraction**: BERTopic-driven semantic clustering
+        - **Contextual Topic Descriptions**: Human-friendly summaries using real sentences
+        - **Download Support**: Save summaries for offline use
+
+        ## Tips
+        - Use texts longer than 500 words for better topic extraction
+        - Click 'Process Text' after uploading or pasting content
         """)
-
-def main():
-    st.title("Text Summarization & Topic Extraction Tool")
-    
-    summarizer, topic_model = load_models()
-    
-    # File upload or text input
-    input_method = st.radio("Choose input method:", ("Upload PDF", "Paste Text"))
-    
-    text = ""
-    if input_method == "Upload PDF":
-        uploaded_file = st.file_uploader("Upload PDF", type="pdf")
-        if uploaded_file:
-            text = extract_text_from_pdf(uploaded_file)
-    else:
-        text = st.text_area("Paste your text here:", height=300)
-    
-    if text:
-        with st.spinner("Processing..."):
-            # Generate Summary
-            start_time = time.time()
-            summary = generate_summary(text, summarizer)
-            st.subheader("Summary")
-            st.write(summary)
-            
-            # Topic Extraction
-            st.subheader("Key Topics")
-            topic_info = extract_topics(text, topic_model)
-            
-            # Display topics with representative words
-            for index, row in topic_info.iterrows():
-                if row['Topic'] != -1:  # Filter out outliers
-                    st.markdown(f"**Topic {row['Topic']}**: {', '.join(row['Representative_Docs'])}")
-            
-            st.write(f"Processing time: {time.time() - start_time:.2f} seconds")
-
-
+        
 if __name__ == "__main__":
     main()
