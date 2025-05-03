@@ -1,5 +1,5 @@
 # Text Summarization and Topic Extraction
-Group Project - Neural Network Module
+Group Project - Neural Network Module (Group 02)
 
 This project is a Streamlit-based web application that allows users to upload or paste text, summarize it using a Transformer-based model, and extract key topics using BERTopic.
 
@@ -38,6 +38,6 @@ Topic Extraction: Selecting relevant key topics was challenging due to overlappi
 Performance: Processing time increased with larger texts, especially during topic modeling.
 
 ## Contribution        
-Pdf_processor.py - M.K.I.M. Rohana        
-Topic_modeler.py - M.R.K. Karunathilaka
-Summarizer.py    - G.A.A.S. Ganegoda
+Pdf_processor.py - M.K.I.M. Rohana - 24572       
+Topic_modeler.py - M.R.K. Karunathilaka - 24490
+Summarizer.py    - G.A.A.S. Ganegoda - 24614
