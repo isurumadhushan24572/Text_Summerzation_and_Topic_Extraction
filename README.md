@@ -6,12 +6,12 @@
 create Virtual env
 
   ```
-  python -m venv chatbot-env
+  python -m venv nlp-env
   ```
 activate Virtual env
 
   ```
-  cd chatbot-env\Scripts\activate
+  cd nlp-env\Scripts\activate
   ```
 creating .gitignore file
 
