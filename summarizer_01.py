@@ -10,11 +10,14 @@ def generate_summary(text, summarizer, max_length=150):
     chunks = chunk_text(text)
     summaries = []
     for chunk in chunks:
-        summary = summarizer(
-            chunk,
-            max_length=max_length,
-            min_length=30,
-            do_sample=False
-        )[0]['summary_text']
-        summaries.append(summary)
+        try:
+            summary = summarizer(
+                chunk,
+                max_length=min(max_length, 512),  # Safely cap length
+                min_length=30,
+                do_sample=False
+            )[0]['summary_text']
+            summaries.append(summary)
+        except Exception as e:
+            summaries.append(f"[Error in summarization: {e}]")
     return " ".join(summaries)
