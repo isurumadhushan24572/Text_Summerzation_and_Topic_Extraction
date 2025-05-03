@@ -38,7 +38,6 @@
  ##### Used Libraries
    ```
  from transformers import pipeline
-
    ```
    * Pipeline - use for tasks like summarization, sentiment analysis, translation, etc.
 
@@ -47,7 +46,6 @@
    ```
 def initialize_summarizer():
     return pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
-
    ```
    * Loads a pre-trained summarization pipeline using Hugging Face's transformers library.
    * Uses the DistilBART model (sshleifer/distilbart-cnn-12-6), which is a lighter, faster version of BART optimized for summarizing long texts
@@ -55,7 +53,6 @@ def initialize_summarizer():
    ```
 def chunk_text(text, max_chunk=1024):
     return [text[i:i+max_chunk] for i in range(0, len(text), max_chunk)]
-
    ```
    * Splits the input text into smaller chunks (default max 1024 characters).
    * This is necessary because most transformer models have a limit on input length (often 1024 tokens or fewer).
@@ -64,7 +61,6 @@ def chunk_text(text, max_chunk=1024):
    ###### **generate_summary(text, summarizer, default_max_length=150)**
    ```
 def generate_summary(text, summarizer, default_max_length=150):
-
    ```
    * First calls chunk_text to split the long text.
    * Then loops over each chunk and:
@@ -180,24 +176,24 @@ topic_info = extract_topics(text, topic_model)
 * Foor the SentenceTransformer used light weight and fast model called : paraphrase-albert-small-v2
 * Remove Stop Words when extracting the topics
   
-
-   pdf_processor.py — For extracting text from PDF files.
-
-   summarizer.py — For generating text summaries using Transformer models.
-
-   topic_modeler.py — For extracting topics using BERTopic.
-
-   app.py — Main Streamlit application scrip
-
  ## Used Technologies & Tools
- #####
+ 
+* ***Python 3.10+*** – Core programming language
+* ***Streamlit*** – Interactive web app framework
+* ***Transformers (Hugging Face)*** – For text summarization using sshleifer/distilbart-cnn-12-6
+* ***BERTopic*** – Topic modeling using transformer-based embeddings, UMAP, and HDBSCAN
+* ***Sentence-Transformers*** – Embedding model (all-MiniLM-L6-v2) for semantic understanding
+* ***UMAP*** – Non-linear dimensionality reduction for visualization and clustering
+* ***HDBSCAN*** – Hierarchical density-based clustering for topic discovery
+* ***Scikit-learn*** – CountVectorizer for word frequency analysis and stopword removal
+* ***pdfplumber*** – High-fidelity PDF text extraction
 
 ## 👥 Contribution        
-Pdf_processor.py, app.py - M.K.I.M. Rohana - 24572   
+M K I M Rohana - 24572 - pdf_processor.py, app.py   
 
-Topic_modeler.py - M.R.K. Karunathilaka - 24490
+M R K Karunathilaka - 24490 - topic_modeler.py 
 
-Summarizer.py    - G.A.A.S. Ganegoda - 24614
+G A A S Ganegoda - 24614 - summarizer.py    
 
 
 
