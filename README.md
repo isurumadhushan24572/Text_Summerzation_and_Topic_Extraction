@@ -1,7 +1,8 @@
 # Text Summarization and Topic Extraction
-Group Project - Neural Network Module (Group 02)
 
-This project is a Streamlit-based web application that allows users to upload or paste text, summarize it using a Transformer-based model, and extract key topics using BERTopic.
+## Group Project - Neural Network Module (Group 02)
+
+#### This project is a Streamlit-based web application that allows users to upload or paste text, summarize it using a Transformer-based model, and extract key topics using BERTopic.
 
 ## Steps Should Follow
 
