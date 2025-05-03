@@ -5,23 +5,23 @@ This project is a Streamlit-based web application that allows users to upload or
 
 ## Steps Should Follow
 
-1. Create a virtual environment
+### 1. Create a virtual environment
   ```
   python -m venv nlp-env
   ```
-2. Activate the virtual environment
+### 2. Activate the virtual environment
 
   ```
   cd nlp-env\Scripts\activate
   ```
-3. creating .gitignore file
+### 3. creating .gitignore file
 
-4. Install required libraries
+### 4. Install required libraries
 
   ```
   pip install -r requirements.txt
   ```
-5. Create the following Python files:
+### 5. Create the following Python files:
 
    pdf_processor.py — For extracting text from PDF files.
 
@@ -31,14 +31,14 @@ This project is a Streamlit-based web application that allows users to upload or
 
    app.py — Main Streamlit application scrip
 
-⚠️ Challenges Faced
+## ⚠️ Challenges Faced
 
 Topic Extraction: Selecting relevant key topics was challenging due to overlapping themes in similar documents.
 
 Performance: Processing time increased with larger texts, especially during topic modeling.
 
-     Module               Contributor          
+## Contribution        
 
-summarizer.py           G.A.A.S.Ganegoda                
-pdf_processor.py        M.K.I.M. Rohana        
-topic_modeler.py        M.R.K. Karunathilaka
+pdf_processor.py - M.K.I.M. Rohana        
+topic_modeler.py - M.R.K. Karunathilaka
+summarizer.py    - G.A.A.S.Ganegoda
