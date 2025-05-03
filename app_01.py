@@ -1,7 +1,7 @@
 import streamlit as st
 from pdf_processor import extract_text_from_pdf
-from summarizer import initialize_summarizer, generate_summary
-from topic_modeler import initialize_topic_model, extract_topics
+from summarizer_01 import initialize_summarizer, generate_summary
+from topic_modeler_01 import initialize_topic_model, extract_topics
 import time
 from collections import defaultdict
 
