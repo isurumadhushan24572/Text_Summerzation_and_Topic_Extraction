@@ -34,7 +34,45 @@
 * That mean when the function called return the the text data of uploaded PDF Files.
    
 ## 3.Create summarizer python File
- ##### 2.1) 
+
+ ##### Used Libraries
+   ```
+ from transformers import pipeline
+
+   ```
+   * Pipeline - use for tasks like summarization, sentiment analysis, translation, etc.
+
+ ##### Used Functions
+  ###### **initialize_summarizer()**
+   ```
+def initialize_summarizer():
+    return pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
+
+   ```
+   * Loads a pre-trained summarization pipeline using Hugging Face's transformers library.
+   * Uses the DistilBART model (sshleifer/distilbart-cnn-12-6), which is a lighter, faster version of BART optimized for summarizing long texts
+  ###### **chunk_text(text, max_chunk=1024)**
+   ```
+def chunk_text(text, max_chunk=1024):
+    return [text[i:i+max_chunk] for i in range(0, len(text), max_chunk)]
+
+   ```
+   * Splits the input text into smaller chunks (default max 1024 characters).
+   * This is necessary because most transformer models have a limit on input length (often 1024 tokens or fewer).
+   * Ensures that long documents can be processed safely without exceeding the model's input limit.
+
+   ###### **generate_summary(text, summarizer, default_max_length=150)**
+   ```
+def generate_summary(text, summarizer, default_max_length=150):
+
+   ```
+   * First calls chunk_text to split the long text.
+   * Then loops over each chunk and:
+        * Calculates an appropriate max_length based on the input length.
+        * Calls the summarizer model to summarize each chunk.
+        * Handles exceptions and appends all summaries together.
+          
+   ###### **Then,returns a single combined summary of the full text**
 
 ## 4.Create topic_modeler python File
  #### Steps:
