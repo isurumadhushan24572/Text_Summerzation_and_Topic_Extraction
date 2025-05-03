@@ -78,64 +78,65 @@ def generate_summary(text, summarizer, default_max_length=150):
  #### Steps:
   **1. Input Text**
      
-Start with a long paragraph of text, which the user provides.
-     
-  **2. Sentence Split**
+* Start with a long paragraph of text, which the user provides.
 
-The text is split into individual sentences.
+
+**2. Sentence Split**
+
+* The text is split into individual sentences.
 
 Code:
      
-          docs = [sent.strip() for sent in text.split('.') if len(sent.strip().split()) > 5]
+    docs = [sent.strip() for sent in text.split('.') if len(sent.strip().split()) > 5]
 
 
   **3. Sentence Embeddings (BERT)**         
 
-Each sentence is then transformed into a numerical form, called an "embedding." We use a BERT-based model (SentenceTransformer) to capture the meaning of each sentence in numbers.
+* Each sentence is then transformed into a numerical form, called an "embedding." We use a BERT-based model (SentenceTransformer) to capture the meaning of each sentence in numbers.
 
 Code:
 
-          embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
            
   **4. Dimensionality Reduction (UMAP)**
 
-These sentence embeddings are large, we use a technique called UMAP to reduce their size, making them easier to group.
+* These sentence embeddings are large, we use a technique called UMAP to reduce their size, making them easier to group.
 
-This helps the next step (clustering) to work more efficiently.
+* This helps the next step (clustering) to work more efficiently.
      
 Code:
 
-          umap_model = UMAP(n_neighbors=10, n_components=5, ...)
+    umap_model = UMAP(n_neighbors=10, n_components=5, ...)
 
                       
   **5. Clustering (HDBSCAN)**
 
-We group the sentences that are similar in meaning into clusters, which we call topics. Any sentences that don't fit well into any cluster are marked as "noise".
+* We group the sentences that are similar in meaning into clusters, which we call topics. Any sentences that don't fit well into any cluster are marked as "noise".
 
 Code:
 
-          hdbscan_model = HDBSCAN(min_cluster_size=5, ...)
+    hdbscan_model = HDBSCAN(min_cluster_size=5, ...)
 
                   
   **6. Topic Extraction (BERTopic)**
 
-Use BERTopic to extract the topics. This combines all the earlier steps and identifies the key topics based on the clustered sentences. It also pulls out the most important words related to each topic.
+* Use BERTopic to extract the topics. This combines all the earlier steps and identifies the key topics based on the clustered sentences. It also pulls out the most important words related to each topic.
 
 Code: 
 
-          topic_model = BERTopic(...)
-          topics, _ = topic_model.fit_transform(docs)
+    topic_model = BERTopic(...)
+    topics, _ = topic_model.fit_transform(docs)
 
                   
   **7. Representative Sentences + Summary**
 
-Extract sentences for each topic & give the summary.
+* Extract sentences for each topic & give the summary.
 
 Code: 
 
-          rep_docs = topic_model.get_representative_docs(topic_id)
-          summary = _generate_topic_summary(topic_labels)
+    rep_docs = topic_model.get_representative_docs(topic_id)
+    summary = _generate_topic_summary(topic_labels)
 
 
 
