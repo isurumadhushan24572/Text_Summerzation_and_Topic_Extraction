@@ -1,22 +1,44 @@
-# Text_Summerzation_and_Topic_Extraction
- Group project Neural Network
+# Text Summarization and Topic Extraction
+Group Project - Neural Network Module
+
+This project is a Streamlit-based web application that allows users to upload or paste text, summarize it using a Transformer-based model, and extract key topics using BERTopic.
 
 ## Steps Should Follow
 
-create Virtual env
-
+1. Create a virtual environment
   ```
   python -m venv nlp-env
   ```
-activate Virtual env
+2. Activate the virtual environment
 
   ```
   cd nlp-env\Scripts\activate
   ```
-creating .gitignore file
+3. creating .gitignore file
 
-Insatalling Required dependencies
+4. Install required libraries
 
   ```
   pip install -r requirements.txt
   ```
+5. Create the following Python files:
+
+   pdf_processor.py — For extracting text from PDF files.
+
+   summarizer.py — For generating text summaries using Transformer models.
+
+   topic_modeler.py — For extracting topics using BERTopic.
+
+   app.py — Main Streamlit application scrip
+
+⚠️ Challenges Faced
+
+Topic Extraction: Selecting relevant key topics was challenging due to overlapping themes in similar documents.
+
+Performance: Processing time increased with larger texts, especially during topic modeling.
+
+     Module               Contributor          
+
+summarizer.py           G.A.A.S.Ganegoda                
+pdf_processor.py        M.K.I.M. Rohana        
+topic_modeler.py        M.R.K. Karunathilaka
