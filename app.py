@@ -13,9 +13,9 @@ st.set_page_config(
 )
 
 # --------- Cache Models ---------
-=======
+
 # Initialize models once
-]
+
 @st.cache_resource
 def load_models():
     summarizer = initialize_summarizer()
@@ -113,7 +113,7 @@ def main():
         - Built with Python & Streamlit
         - Perfect for summarizing research papers, business documents, long articles, and more!
         """)
-=======
+
 def main():
     st.title("Text Summarization & Topic Extraction Tool")
     
