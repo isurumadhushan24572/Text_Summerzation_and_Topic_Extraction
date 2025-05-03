@@ -38,6 +38,6 @@ Topic Extraction: Selecting relevant key topics was challenging due to overlappi
 Performance: Processing time increased with larger texts, especially during topic modeling.
 
 ## Contribution        
-pdf_processor.py - M.K.I.M. Rohana        
-topic_modeler.py - M.R.K. Karunathilaka
-summarizer.py    - G.A.A.S.Ganegoda
+Pdf_processor.py - M.K.I.M. Rohana        
+Topic_modeler.py - M.R.K. Karunathilaka
+Summarizer.py    - G.A.A.S. Ganegoda
