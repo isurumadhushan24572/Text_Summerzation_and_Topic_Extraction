@@ -4,6 +4,8 @@
 
 #### This project is a Streamlit-based web application that allows users to upload or paste text, summarize it using a Transformer-based model, and extract key topics using BERTopic.
 
+![My Logo](QR_CODE.jpeg)
+
 ## Steps Followed
 ## 1.Create a virtual environment 
  ##### 1.1)  Make Virtual Environment as nlp-env
